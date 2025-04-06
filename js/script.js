@@ -1,50 +1,34 @@
-// Función para mostrar/ocultar contraseña
-function togglePassword() {
-    const passwordInput = document.getElementById('password');
-    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-}
+// Datos de usuarios
+const users = [
+    { username: "Benjamin", password: "benjamin_01" },
+    { username: "Alejandro", password: "alejandro_02" }
+];
 
-// Cargar usuarios desde el JSON
-async function loadUsers() {
-    try {
-        const response = await fetch('data/users.json');
-        if (!response.ok) {
-            throw new Error('Error al cargar usuarios');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-        return [];
-    }
-}
-
-// Evento de submit del formulario
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
+// Login
+document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     const messageDiv = document.getElementById('message');
-    messageDiv.textContent = "Verificando...";
-    messageDiv.className = "message";
+
+    const user = users.find(u => 
+        u.username.toLowerCase() === username.toLowerCase() && 
+        u.password === password
+    );
     
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-    
-    try {
-        const users = await loadUsers();
-        const user = users.find(u => 
-            u.username.toLowerCase() === username.toLowerCase() && 
-            u.password === password
-        );
-        
-        if (user) {
-            window.location.href = `plataforma.html?user=${encodeURIComponent(user.username)}`;
-        } else {
-            messageDiv.textContent = "✗ Error: Usuario o contraseña incorrectos";
-            messageDiv.className = "message error";
-        }
-    } catch (error) {
-        messageDiv.textContent = "⚠️ Error en el sistema. Intente nuevamente.";
+    if (user) {
+        localStorage.setItem('currentUser', user.username);
+        window.location.href = 'plataforma.html';
+    } else {
+        messageDiv.textContent = "✗ Usuario o contraseña incorrectos";
         messageDiv.className = "message error";
-        console.error("Error en login:", error);
     }
+});
+
+// Mostrar/ocultar contraseña
+document.querySelector('.toggle-password').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password');
+    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+    this.textContent = this.textContent === '👁️' ? '🙈' : '👁️';
 });

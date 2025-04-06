@@ -7,59 +7,77 @@
     <link rel="icon" href="img/logo.png">
     <link rel="stylesheet" href="css/welcome.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        // Verificar sesión al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('currentUser');
+            
+            if (!username) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Mostrar contenido
+            document.body.innerHTML = `
+                <header>
+                    <div class="user-info">
+                        <span>${username}</span>
+                        <button onclick="logout()" class="logout-btn">Cerrar sesión</button>
+                    </div>
+                </header>
+                <main>
+                    <div class="welcome-container">
+                        <h1>¡Bienvenido <span>${username}</span> al curso de <span>Ingeniería de Software</span>!</h1>
+                        <div class="course-info">
+                            <p>Estás accediendo como: <strong>${username}</strong></p>
+                            <div class="features">
+                                <div class="feature-card">
+                                    <div class="feature-card-content">
+                                        <h3>📚 Material del curso</h3>
+                                        <div class="divider"></div>
+                                        <p>Archivos en los que estamos trabajando</p>
+                                        <p>Ingeniería de Software - <a href="#" class="download-link">Descargar</a></p>
+                                    </div>
+                                </div>
+                                <div class="feature-card">
+                                    <div class="feature-card-content">
+                                        <h3>📝 Actividades pendientes</h3>
+                                        <div class="divider"></div>
+                                        <ul>
+                                            <li>Realiza una carta compromiso</li>
+                                            <li>Revisión del syllabus</li>
+                                            <li>Investigación sobre metodologías ágiles</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="feature-card">
+                                    <div class="feature-card-content">
+                                        <h3>📊 Retroalimentación</h3>
+                                        <div class="divider"></div>
+                                        <ul>
+                                            <li>Consejo: Revisa los apuntes de la clase anterior</li>
+                                            <li>Recuerda: La entrega del primer trabajo es el viernes</li>
+                                            <li>Sugerencia: Organiza tu tiempo de estudio</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            `;
+        });
+        
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
 </head>
 <body>
-    <header>
-        <div class="user-info">
-            <span id="username"></span>
-            <button onclick="logout()" class="logout-btn">Cerrar sesión</button>
-        </div>
-    </header>
-
-    <main>
-        <div class="welcome-container">
-            <h1>¡Bienvenido al curso de <span>Ingeniería de Software</span>!</h1>
-            <div class="course-info">
-                <p>Estás accediendo como: <strong id="display-username"></strong></p>
-                <div class="features">
-                    <!-- Caja de Material del Curso -->
-                    <div class="feature-card">
-                        <div class="feature-card-content">
-                            <h3>📚 Material del curso</h3>
-                            <div class="divider"></div>
-                            <p>Archivos en los que estamos trabajando</p>
-                            <p>Ingeniería de Software - <a href="#" class="download-link">Descarga no disponible</a></p>
-                        </div>
-                    </div>
-                    
-                    <!-- Caja de Actividades Pendientes -->
-                    <div class="feature-card">
-                        <div class="feature-card-content">
-                            <h3>📝 Actividades pendientes</h3>
-                            <div class="divider"></div>
-                            <ul>
-                                <li>Realiza una carta compromiso</li>
-                                <li>La carta debe contener tu compromiso de trabajo durante 5 meses</li>
-                                <li>Debe contener qué tipo de aprendizaje deseas tener</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <!-- Caja de Retroalimentación -->
-                    <div class="feature-card">
-                        <div class="feature-card-content">
-                            <h3>📊 Retroalimentación</h3>
-                            <div class="divider"></div>
-                            <ul>
-                                <li>Sugerencia: Organiza tu tiempo de estudio</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script src="js/welcome.js"></script>
+    <!-- El contenido se carga dinámicamente -->
+    <div style="text-align: center; padding: 2rem;">
+        <p>Cargando plataforma...</p>
+    </div>
 </body>
 </html>
